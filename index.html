@@ -439,10 +439,10 @@
         }
 
         // Gestion de l'achat
-        function handlePurchase(event) {
-            event.preventDefault(); // Empêche la soumission du formulaire par défaut
+        document.getElementById('orderForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Empêche la soumission par défaut
 
-            const form = document.getElementById('orderForm');
+            const form = this;
             const confirmationMessage = document.getElementById('confirmationMessage');
             const thankYouPage = document.getElementById('thankYouPage');
 
@@ -469,7 +469,7 @@
             } else {
                 alert("Veuillez remplir tous les champs obligatoires.");
             }
-        }
+        });
 
         // Appel initial pour afficher les frais si déjà sélectionnés
         window.onload = function () {
