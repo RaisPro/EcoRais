@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Produit</title>
+    <style>
+        /* Styles généraux */
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://www.labouclevoyageuse.fr/wp-content/uploads/2020/12/Lac-de-guery_La-Boucle-Voyageuse-34.jpg') no-repeat center center fixed; /* Image de fond */
+            background-size: cover;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Conteneur principal */
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.589); /* Fond semi-transparent */
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        /* Section produit */
+        .product-info {
+            width: 50%;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .product-image {
+            width: 40%;
+            text-align: center;
+            animation: zoomIn 1s ease-in-out;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .product-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .product-description {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            color: #ff0000;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Formulaire */
+        form {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.637); /* Fond semi-transparent */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #616161;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            border-color: #ff6f61;
+            outline: none;
+        }
+
+        .radio-group {
+            margin-bottom: 15px;
+        }
+
+        .radio-group label {
+            margin-right: 20px;
+            font-size: 1rem;
+        }
+
+        .address-field {
+            display: none; /* Masqué par défaut */
+        }
+
+        /* Bouton acheter maintenant */
+        .buy-now-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .buy-now-btn:hover {
+            transform: scale(1.1);
+            background-color: #ff0000;
+        }
+
+        /* Message de confirmation */
+        .confirmation-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Page de remerciement avec cadre */
+        .thank-you-page {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px 50px; /* Espace intérieur */
+            background-color: rgba(255, 255, 255, 0.692); /* Fond semi-transparent */
+            border: 2px solid #464646be; /* Bordure rouge orangée */
+            border-radius: 15px; /* Coins arrondis */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Ombre légère */
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .thank-you-page h2 {
+            font-size: 2.5rem;
+            color: #ff0000;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .thank-you-page p {
+            font-size: 1.2rem;
+            color: #000000;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .product-info, .product-image {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- En-tête -->
+    <header>
+        <h1>Boutique Élégance</h1>
+    </header>
+
+    <!-- Conteneur principal -->
+    <div class="container">
+        <!-- Informations du produit -->
+        <div class="product-info">
+            <h2 class="product-name">T-Shirt Mode</h2>
+            <p class="product-description">Un t-shirt confortable et stylé pour toutes occasions.</p>
+            <p class="product-price">Prix : 2500 DA</p>
+            <p id="shipping-cost">Frais de livraison : Calculés automatiquement</p>
+        </div>
+
+        <!-- Image du produit -->
+        <div class="product-image">
+            <img src="https://via.placeholder.com/300x400" alt="T-Shirt Mode">
+        </div>
+    </div>
+
+    <!-- Formulaire de commande -->
+    <form id="orderForm" action="https://formspree.io/f/xovjkqny" method="POST"> <!-- Remplacez "xyz123" par votre ID Formspree -->
+        <label for="name">Nom et Prénom :</label>
+        <input type="text" id="name" name="name" required>
+
+        <div class="radio-group">
+            <label><input type="radio" name="delivery" value="home" onclick="toggleAddressField()"> Livraison à domicile</label>
+            <label><input type="radio" name="delivery" value="desk" onclick="toggleAddressField()"> Stop Desk</label>
+        </div>
+
+        <label for="wilaya">Wilaya :</label>
+        <select id="wilaya" name="wilaya" onchange="updateShippingCost()" required>
+            <option value="">-- Sélectionnez votre wilaya --</option>
+            <option value="Adrar">Adrar</option>
+            <option value="Chlef">Chlef</option>
+            <option value="Laghouat">Laghouat</option>
+            <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+            <option value="Batna">Batna</option>
+            <option value="Béjaïa">Béjaïa</option>
+            <option value="Biskra">Biskra</option>
+            <option value="Béchar">Béchar</option>
+            <option value="Blida">Blida</option>
+            <option value="Bouira">Bouira</option>
+            <option value="Tamanrasset">Tamanrasset</option>
+            <option value="Tébessa">Tébessa</option>
+            <option value="Tlemcen">Tlemcen</option>
+            <option value="Tiaret">Tiaret</option>
+            <option value="Tizi Ouzou">Tizi Ouzou</option>
+            <option value="Alger">Alger</option>
+            <option value="Djelfa">Djelfa</option>
+            <option value="Jijel">Jijel</option>
+            <option value="Sétif">Sétif</option>
+            <option value="Saïda">Saïda</option>
+            <option value="Skikda">Skikda</option>
+            <option value="Sidi Bel Abbès">Sidi Bel Abbès</option>
+            <option value="Annaba">Annaba</option>
+            <option value="Guelma">Guelma</option>
+            <option value="Constantine">Constantine</option>
+            <option value="Médéa">Médéa</option>
+            <option value="Mostaganem">Mostaganem</option>
+            <option value="MSila">M'Sila</option>
+            <option value="Mascara">Mascara</option>
+            <option value="Ouargla">Ouargla</option>
+            <option value="Oran">Oran</option>
+            <option value="El Bayadh">El Bayadh</option>
+            <option value="Illizi">Illizi</option>
+            <option value="Bordj Bou Arréridj">Bordj Bou Arréridj</option>
+            <option value="Boumerdès">Boumerdès</option>
+            <option value="El Tarf">El Tarf</option>
+            <option value="Tindouf">Tindouf</option>
+            <option value="Tissemsilt">Tissemsilt</option>
+            <option value="El Oued">El Oued</option>
+            <option value="Khenchela">Khenchela</option>
+            <option value="Souk Ahras">Souk Ahras</option>
+            <option value="Tipaza">Tipaza</option>
+            <option value="Mila">Mila</option>
+            <option value="Aïn Defla">Aïn Defla</option>
+            <option value="Naâma">Naâma</option>
+            <option value="Aïn Témouchent">Aïn Témouchent</option>
+            <option value="Ghardaïa">Ghardaïa</option>
+            <option value="Relizane">Relizane</option>
+            <option value="Bouira">Bouira</option>
+            <option value="Djanet">Djanet</option>
+            <!-- Ajoutez ici les autres wilayas -->
+        </select>
+
+        <!-- Case "Adresse exacte" conditionnelle -->
+        <div class="address-field">
+            <label for="address">Adresse exacte :</label>
+            <input type="text" id="address" name="address">
+        </div>
+
+        <label for="phone">Numéro de téléphone :</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="size">Choix de la taille :</label>
+        <select id="size" name="size" required>
+            <option value="">-- Sélectionnez votre taille --</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select>
+
+        <button type="button" class="buy-now-btn" onclick="handlePurchase()">Acheter Maintenant</button>
+
+        <div class="confirmation-message" id="confirmationMessage">
+            Votre commande a été confirmée ! Merci !
+        </div>
+    </form>
+
+    <!-- Page de remerciement -->
+    <div class="thank-you-page" id="thankYouPage">
+        <h2>Merci pour votre commande !</h2>
+        <p>Soyez le bienvenu chez nous !</p>
+    </div>
+
+    <script>
+        // Tableau des frais de livraison par wilaya
+        const shippingCosts = {
+            Adrar: { home: 1400, desk: 1100 },
+            Chlef: { home: 850, desk: 450 },
+            Laghouat: { home: 1000, desk: 700 },
+            'Oum El Bouaghi': { home: 850, desk: 500 },
+            Batna: { home: 850, desk: 500 },
+            Béjaïa: { home: 850, desk: 500 },
+            Biskra: { home: 950, desk: 600 },
+            Béchar: { home: 1400, desk: 1100 },
+            Blida: { home: 850, desk: 450 },
+            Bouira: { home: 850, desk: 450 },
+            Tamanrasset: { home: 1800, desk: 1400 },
+            Tébessa: { home: 950, desk: 600 },
+            Tlemcen: { home: 850, desk: 450 },
+            Tiaret: { home: 850, desk: 500 },
+            'Tizi Ouzou': { home: 850, desk: 450 },
+            Alger: { home: 700, desk: 450 },
+            Djelfa: { home: 900, desk: 600 },
+            Jijel: { home: 850, desk: 500 },
+            Sétif: { home: 850, desk: 450 },
+            Saïda: { home: 900, desk: 600 },
+            Skikda: { home: 850, desk: 500 },
+            'Sidi Bel Abbès': { home: 500, desk: 400 },
+            Annaba: { home: 850, desk: 500 },
+            Guelma: { home: 900, desk: 600 },
+            Constantine: { home: 850, desk: 450 },
+            Médéa: { home: 850, desk: 450 },
+            Mostaganem: { home: 850, desk: 450 },
+            MSila: {home: 850, desk: 500 },
+            Mascara: { home: 900, desk: 600 },
+            Ouargla: { home: 1100, desk: 800 },
+            Oran: { home: 850, desk: 450 },
+            'El Bayadh': { home: 1100, desk: 800 },
+            Illizi: { home: 2000, desk: 1700 },
+            'Bordj Bou Arréridj': { home: 850, desk: 450 },
+            Boumerdès: { home: 850, desk: 450 },
+            'El Tarf': { home: 950, desk: 600 },
+            Tindouf: { home: 1800, desk: 1400 },
+            Tissemsilt: { home: 850, desk: 500 },
+            'El Oued': { home: 1100, desk: 800 },
+            Khenchela: { home: 600, desk: 900 },
+            'Souk Ahras': { home: 900, desk: 600 },
+            Tipaza: { home: 850, desk: 450 },
+            Mila: { home: 850, desk: 500 },
+            'Aïn Defla': { home: 850, desk: 450 },
+            Naâma: { home: 1100, desk: 800 },
+            'Aïn Témouchent': { home: 900, desk: 600 },
+            Ghardaïa: { home: 1100, desk: 800 },
+            Relizane: { home: 850, desk: 450 },
+            Djanet: { home: 2000, desk: 1700 }
+            // Ajoutez ici les autres wilayas avec leurs frais
+        };
+
+        // Fonction pour mettre à jour les frais de livraison
+        function updateShippingCost() {
+            const deliveryChoice = document.querySelector('input[name="delivery"]:checked');
+            const wilayaSelect = document.getElementById('wilaya');
+            const selectedWilaya = wilayaSelect.value;
+            const shippingCostElement = document.getElementById('shipping-cost');
+
+            if (!deliveryChoice || !selectedWilaya || !shippingCosts[selectedWilaya]) {
+                shippingCostElement.textContent = "Frais de livraison : Calculés automatiquement";
+                return;
+            }
+
+            let cost = 0;
+
+            if (deliveryChoice.value === "home") {
+                cost = shippingCosts[selectedWilaya]?.home || 0; // Récupère les frais pour "Livraison à domicile"
+            } else if (deliveryChoice.value === "desk") {
+                cost = shippingCosts[selectedWilaya]?.desk || 0; // Récupère les frais pour "Stop Desk"
+            }
+
+            shippingCostElement.textContent = `Frais de livraison : ${cost} DA`;
+        }
+
+        // Gestion de l'affichage de l'adresse selon le choix de livraison
+        function toggleAddressField() {
+            const deliveryChoice = document.querySelector('input[name="delivery"]:checked').value;
+            const addressField = document.querySelector('.address-field');
+            const addressInput = addressField.querySelector('input');
+
+            if (deliveryChoice === 'home') {
+                addressField.style.display = 'block'; // Affiche la case "Adresse exacte"
+                addressInput.setAttribute('required', 'required'); // Rend le champ obligatoire
+            } else {
+                addressField.style.display = 'none'; // Masque la case "Adresse exacte"
+                addressInput.removeAttribute('required'); // Supprime l'obligation
+            }
+            updateShippingCost(); // Mettre à jour les frais après le changement de mode de livraison
+        }
+
+        // Gestion de l'achat
+        function handlePurchase() {
+            const form = document.getElementById('orderForm');
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const thankYouPage = document.getElementById('thankYouPage');
+
+            if (form.checkValidity()) {
+                confirmationMessage.style.display = 'block';
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    thankYouPage.style.display = 'block';
+                }, 2000); // Affiche la page de remerciement après 2 secondes
+            } else {
+                alert("Veuillez remplir tous les champs obligatoires.");
+            }
+        }
+
+        // Appel initial pour afficher les frais si déjà sélectionnés
+        window.onload = function () {
+            updateShippingCost();
+        };
+    </script>
+
+</body>
+</html>
