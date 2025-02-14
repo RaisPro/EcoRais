@@ -12,7 +12,7 @@
             padding: 0;
             background: url('https://www.labouclevoyageuse.fr/wp-content/uploads/2020/12/Lac-de-guery_La-Boucle-Voyageuse-34.jpg') no-repeat center center fixed; /* Image de fond */
             background-size: cover;
-            color: #333;
+            color: #000000;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -31,7 +31,7 @@
             align-items: flex-start;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.589); /* Fond semi-transparent */
+            background: rgba(255, 255, 255, 0.568); /* Fond semi-transparent */
             animation: slideInLeft 1s ease-in-out;
         }
 
@@ -85,7 +85,7 @@
         form {
             margin-top: 20px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.637); /* Fond semi-transparent */
+            background: rgba(255, 255, 255, 0.616); /* Fond semi-transparent */
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             animation: fadeInUp 1s ease-in-out;
@@ -104,7 +104,7 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #616161;
+            border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
@@ -113,7 +113,7 @@
         input[type="text"]:focus,
         input[type="tel"]:focus,
         select:focus {
-            border-color: #ff6f61;
+            border-color: #ff0000;
             outline: none;
         }
 
@@ -161,16 +161,16 @@
             animation: fadeIn 1s ease-in-out;
         }
 
-        /* Page de remerciement avec cadre */
+        /* Page de remerciement */
         .thank-you-page {
             display: none;
             text-align: center;
             margin-top: 50px;
-            padding: 30px 50px; /* Espace intérieur */
-            background-color: rgba(255, 255, 255, 0.692); /* Fond semi-transparent */
-            border: 2px solid #464646be; /* Bordure rouge orangée */
-            border-radius: 15px; /* Coins arrondis */
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Ombre légère */
+            padding: 30px 50px;
+            background-color: rgba(255, 255, 255, 0.658);
+            border: 2px solid #ff0000;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             animation: fadeInUp 1s ease-in-out;
         }
 
@@ -179,11 +179,6 @@
             color: #ff0000;
             font-weight: bold;
             margin-bottom: 10px;
-        }
-
-        .thank-you-page p {
-            font-size: 1.2rem;
-            color: #000000;
         }
 
         /* Animations */
@@ -195,21 +190,6 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         /* Responsive */
@@ -248,7 +228,7 @@
     </div>
 
     <!-- Formulaire de commande -->
-    <form id="orderForm" action="https://formspree.io/f/xovjkqny" method="POST"> <!-- Remplacez "xyz123" par votre ID Formspree -->
+    <form id="orderForm" action="https://formspree.io/f/movjlqdd" method="POST"> <!-- Remplacez "xyz123" par votre ID Formspree -->
         <label for="name">Nom et Prénom :</label>
         <input type="text" id="name" name="name" required>
 
@@ -331,7 +311,7 @@
             <option value="XXL">XXL</option>
         </select>
 
-        <button type="button" class="buy-now-btn" onclick="handlePurchase()">Acheter Maintenant</button>
+        <button type="submit" class="buy-now-btn">Acheter Maintenant</button>
 
         <div class="confirmation-message" id="confirmationMessage">
             Votre commande a été confirmée ! Merci !
