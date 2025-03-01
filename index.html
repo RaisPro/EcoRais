@@ -217,7 +217,12 @@
         <div class="product-info">
             <h2 class="product-name">T-Shirt Mode</h2>
             <p class="product-description">Un t-shirt confortable et stylé pour toutes occasions.</p>
-            <p class="product-price">Prix : 2500 DA</p>
+            <p class="product-price" id="original-price-container">
+                Prix : <span id="original-price">2500 DA</span>
+            </p>
+            <p id="discounted-price-container" style="display: none;">
+                Prix après réduction : <span id="final-price">2250 DA</span>
+            </p>
             <p id="shipping-cost">Frais de livraison : Calculés automatiquement</p>
         </div>
 
@@ -290,6 +295,16 @@
             <option value="Relizane">Relizane</option>
             <option value="Bouira">Bouira</option>
             <option value="Djanet">Djanet</option>
+            <option value="Timimoun">Timimoun</option>
+            <option value="Bordj Badji Mokhtar">Bordj Badji Mokhtar</option>
+            <option value="Ouled Djellal">Ouled Djellal</option>
+            <option value="Béni Abbès">Béni Abbès</option>
+            <option value="In Salah">In Salah</option>
+            <option value="In Guezzam">In Guezzam</option>
+            <option value="Touggourt">Touggourt</option>
+            <option value="Djanet">Djanet</option>
+            <option value="El M'Ghair">El M'Ghair</option>
+            <option value="El Meniaa">El Meniaa</option>
             <!-- Ajoutez ici les autres wilayas -->
         </select>
 
@@ -310,6 +325,10 @@
             <option value="XL">XL</option>
             <option value="XXL">XXL</option>
         </select>
+        
+        <!-- Case de code promo -->
+        <label for="promo-code">Code Promo (10% de réduction) :</label>
+        <input type="text" id="promo-code" name="promo-code" oninput="applyPromoCode()">
 
         <button type="submit" class="buy-now-btn">Acheter Maintenant</button>
 
@@ -375,9 +394,21 @@
             'Aïn Témouchent': { home: 900, desk: 600 },
             Ghardaïa: { home: 1100, desk: 800 },
             Relizane: { home: 850, desk: 450 },
-            Djanet: { home: 2000, desk: 1700 }
+            Djanet: { home: 2000, desk: 1700 },
+            'Timimoun': { home: 1400, desk: 1100 },
+            'Bordj Badji Mokhtar': { home: 2000, desk: 1700 },
+            'Ouled Djellal': { home: 1000, desk: 700 },
+            'Béni Abbès': { home: 1400, desk: 1100 },
+            'In Salah': { home: 1400, desk: 1100 },
+            'In Guezzam': { home: 2000, desk: 1700 },
+            Touggourt: { home: 1100, desk: 1100 },
+            'El M\'Ghair': { home: 1100, desk: 800 },
+            'El Meniaa': { home: 1300, desk: 1000 },
             // Ajoutez ici les autres wilayas avec leurs frais
         };
+
+        // Prix initial du produit
+        const originalPrice = 2500;
 
         // Fonction pour mettre à jour les frais de livraison
         function updateShippingCost() {
@@ -416,6 +447,28 @@
                 addressInput.removeAttribute('required'); // Supprime l'obligation
             }
             updateShippingCost(); // Mettre à jour les frais après le changement de mode de livraison
+        }
+
+        // Appliquer le code promo
+        function applyPromoCode() {
+            const promoCodeInput = document.getElementById('promo-code');
+            const discountedPriceContainer = document.getElementById('discounted-price-container');
+            const originalPriceContainer = document.getElementById('original-price-container');
+            const finalPriceElement = document.getElementById('final-price');
+            const originalPriceElement = document.getElementById('original-price');
+
+            const promoCode = promoCodeInput.value.trim();
+            const validPromoCode = "blanc10"; // Code promo valide
+
+            if (promoCode === validPromoCode) {
+                const discountedPrice = Math.round(originalPrice * 0.9); // Réduction de 10%
+                finalPriceElement.textContent = `${discountedPrice} DA`; // Mettre à jour le prix réduit
+                discountedPriceContainer.style.display = 'block'; // Afficher le prix réduit
+                originalPriceElement.style.textDecoration = 'line-through'; // Barrer le prix initial
+            } else {
+                discountedPriceContainer.style.display = 'none'; // Cacher le prix réduit si le code est incorrect
+                originalPriceElement.style.textDecoration = 'none'; // Réinitialiser le prix initial
+            }
         }
 
         // Gestion de l'achat
