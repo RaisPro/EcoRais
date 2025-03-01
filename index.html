@@ -224,6 +224,9 @@
                 Prix après réduction : <span id="final-price">1575 DA</span>
             </p>
             <p id="shipping-cost">Frais de livraison : Calculés automatiquement</p>
+            <p id="total-price-container">
+                Prix total : <span id="total-price">Calculé automatiquement</span>
+            </p>
         </div>
 
         <!-- Image du produit -->
@@ -330,6 +333,9 @@
         <label for="promo-code">Code Promo (10% de réduction) :</label>
         <input type="text" id="promo-code" name="promo-code" oninput="applyPromoCode()">
 
+        <!-- Champ caché pour le prix total -->
+        <input type="hidden" id="total-price-field" name="total-price">
+
         <button type="submit" class="buy-now-btn">Acheter Maintenant</button>
 
         <div class="confirmation-message" id="confirmationMessage">
@@ -431,6 +437,9 @@
             }
 
             shippingCostElement.textContent = `Frais de livraison : ${cost} DA`;
+
+            // Mettre à jour le prix total
+            calculateTotalPrice(cost);
         }
 
         // Gestion de l'affichage de l'adresse selon le choix de livraison
@@ -453,22 +462,52 @@
         function applyPromoCode() {
             const promoCodeInput = document.getElementById('promo-code');
             const discountedPriceContainer = document.getElementById('discounted-price-container');
-            const originalPriceContainer = document.getElementById('original-price-container');
-            const finalPriceElement = document.getElementById('final-price');
             const originalPriceElement = document.getElementById('original-price');
+            const finalPriceElement = document.getElementById('final-price');
 
             const promoCode = promoCodeInput.value.trim();
             const validPromoCode = "blanc10"; // Code promo valide
 
             if (promoCode === validPromoCode) {
                 const discountedPrice = Math.round(originalPrice * 0.9); // Réduction de 10%
-                finalPriceElement.textContent = `${discountedPrice} DA`; // Mettre à jour le prix réduit
-                discountedPriceContainer.style.display = 'block'; // Afficher le prix réduit
+                finalPriceElement.textContent = `${discountedPrice} DA`;
+                discountedPriceContainer.style.display = 'block';
                 originalPriceElement.style.textDecoration = 'line-through'; // Barrer le prix initial
+                totalPrice = discountedPrice; // Mettre à jour le prix total
             } else {
-                discountedPriceContainer.style.display = 'none'; // Cacher le prix réduit si le code est incorrect
+                discountedPriceContainer.style.display = 'none';
                 originalPriceElement.style.textDecoration = 'none'; // Réinitialiser le prix initial
+                totalPrice = originalPrice; // Réinitialiser le prix total
             }
+
+            // Mettre à jour le prix total en fonction des frais de livraison
+            const shippingCost = getShippingCost();
+            calculateTotalPrice(shippingCost);
+        }
+
+        // Calculer le prix total
+        function calculateTotalPrice(shippingCost) {
+            const totalPriceElement = document.getElementById('total-price');
+            const finalPrice = totalPrice + (shippingCost || 0); // Prix total = prix produit + frais de livraison
+            totalPriceElement.textContent = `${finalPrice} DA`;
+
+            // Mettre à jour le champ caché pour Formspree
+            document.getElementById('total-price-field').value = finalPrice;
+        }
+
+        // Obtenir les frais de livraison actuels
+        function getShippingCost() {
+            const deliveryChoice = document.querySelector('input[name="delivery"]:checked');
+            const wilayaSelect = document.getElementById('wilaya');
+            const selectedWilaya = wilayaSelect.value;
+
+            if (!deliveryChoice || !selectedWilaya || !shippingCosts[selectedWilaya]) {
+                return 0;
+            }
+
+            return deliveryChoice.value === "home"
+                ? shippingCosts[selectedWilaya]?.home || 0
+                : shippingCosts[selectedWilaya]?.desk || 0;
         }
 
         // Gestion de l'achat
